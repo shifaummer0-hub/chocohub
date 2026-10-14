@@ -1,882 +1,1192 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChocoHub - Artisanal Chocolate Boutique</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>ChocoHub | Artisanal Luxury Chocolates</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        chocolate: {
-                            900: '#1e110b',
-                            800: '#2c1810',
-                            700: '#3d2317',
-                            600: '#5a3424',
-                            500: '#7a4833',
-                        },
-                        gold: {
-                            DEFAULT: '#D4AF37',
-                            light: '#F3E5AB',
-                            dark: '#AA8C2C',
-                        },
-                        cream: '#FDFBF7',
-                        whitechoc: '#F5ECE1',
-                    },
-                    fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #FDFBF7;
-            color: #2c1810;
+        :root {
+            --bg-primary: #120a07;
+            --bg-secondary: #1a0f0c;
+            --bg-card: #241410;
+            --accent-gold: #d4af37;
+            --accent-gold-light: #f3e5ab;
+            --accent-gold-dark: #aa8c2c;
+            --text-main: #f5efe6;
+            --text-muted: #b0a399;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        h1, h2, h3, h4, .font-serif {
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, .serif-font {
             font-family: 'Playfair Display', serif;
         }
-        /* Melted drip decorative background element */
-        .melted-drip {
-            background: linear-gradient(135deg, #2c1810 0%, #3d2317 50%, #5a3424 100%);
-        }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA8C2C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .whitechoc-glow {
-            box-shadow: 0 10px 30px -5px rgba(245, 236, 225, 0.4);
-        }
-        /* Custom scrollbar */
+
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #FDFBF7;
+            background: var(--bg-primary);
         }
         ::-webkit-scrollbar-thumb {
-            background: #7a4833;
+            background: var(--accent-gold-dark);
             border-radius: 4px;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(18, 10, 7, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-decoration: none;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.4rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-btn {
+            background: none;
+            border: none;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .cart-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            background: radial-gradient(circle at 70% 50%, #2c1610 0%, var(--bg-primary) 70%);
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 3.8rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero-text h1 span {
+            color: var(--accent-gold);
+            font-style: italic;
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1.25rem;
+        }
+
+        .btn {
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
+            color: var(--bg-primary);
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-gold);
+            background: rgba(212, 175, 55, 0.05);
+            transform: translateY(-3px);
+        }
+
+        /* Pure CSS Chocolate Art Aesthetic Card */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .chocolate-showcase-card {
+            width: 380px;
+            height: 480px;
+            background: linear-gradient(145deg, #2b1712, #180b08);
+            border-radius: 24px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .chocolate-showcase-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .choc-art-box {
+            position: absolute;
+            top: 50px;
+            width: 220px;
+            height: 220px;
+            background: linear-gradient(135deg, #3a1d15 0%, #1c0e0a 100%);
+            border-radius: 16px;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 16px;
+            z-index: 2;
+            transform: rotate(-5deg);
+            transition: var(--transition);
+        }
+
+        .chocolate-showcase-card:hover .choc-art-box {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .choc-item {
+            background: linear-gradient(135deg, #593122 0%, #2c150e 100%);
+            border-radius: 8px;
+            border: 1px solid rgba(212,175,55,0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .choc-item::after {
+            content: '★';
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .choc-info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .choc-info h3 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .choc-info p {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Features Bar */
+        .features-bar {
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 2.5rem 2rem;
+        }
+
+        .features-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        .feature-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Product Section */
+        .products-section {
+            padding: 7rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header span {
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--text-muted);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            border-color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .product-image-wrap {
+            height: 260px;
+            background: linear-gradient(135deg, #2b1712 0%, #150a07 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-graphic {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #422118 0%, #1c0e0a 100%);
+            border-radius: 12px;
+            border: 1.5px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-graphic {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-content {
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .add-to-cart-btn {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent-gold);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            transform: scale(1.1);
+        }
+
+        /* Interactive Box Builder Section */
+        .builder-section {
+            background: var(--bg-secondary);
+            padding: 7rem 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .builder-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 3rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .builder-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .builder-options h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent-gold);
+        }
+
+        .option-group {
+            margin-bottom: 2rem;
+        }
+
+        .option-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+
+        .option-chips {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: var(--bg-primary);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .chip.selected, .chip:hover {
+            border-color: var(--accent-gold);
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--accent-gold);
+        }
+
+        .builder-preview {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px dashed rgba(212, 175, 55, 0.4);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .preview-box-visual {
+            width: 160px;
+            height: 160px;
+            margin: 1.5rem auto;
+            background: linear-gradient(135deg, #3d1e15 0%, #1a0d0a 100%);
+            border-radius: 12px;
+            border: 2px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .preview-summary {
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .preview-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 7rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .stars {
+            color: var(--accent-gold);
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .client-info h4 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .client-info span {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 5rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h3, .footer-col h4 {
+            color: var(--accent-gold);
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-col p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .newsletter-form input {
+            background: var(--bg-primary);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Shopping Cart Drawer */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 420px;
+            height: 100%;
+            background: var(--bg-card);
+            border-left: 1px solid rgba(212, 175, 55, 0.3);
+            z-index: 2000;
+            box-shadow: -20px 0 50px rgba(0,0,0,0.7);
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-cart:hover {
+            color: var(--accent-gold);
+        }
+
+        .cart-body {
+            padding: 2rem;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+        }
+
+        .cart-item-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .cart-item-price {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .remove-item:hover {
+            color: #ff6b6b;
+        }
+
+        .cart-footer {
+            padding: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            background: var(--bg-secondary);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cart-total span:last-child {
+            color: var(--accent-gold);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .checkout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1500;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+            .hero-text p {
+                margin: 0 auto 2.5rem;
+            }
+            .btn-group {
+                justify-content: center;
+            }
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .builder-steps {
+                grid-template-columns: 1fr;
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            .cart-drawer {
+                width: 100%;
+                right: -100%;
+            }
         }
     </style>
 </head>
-<body class="bg-cream text-chocolate-800 antialiased selection:bg-gold selection:text-chocolate-900">
+<body>
 
-    <!-- Navigation Bar -->
-    <header class="sticky top-0 z-50 bg-chocolate-900/95 backdrop-blur-md text-cream border-b border-gold/20 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center space-x-3 group">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold to-whitechoc flex items-center justify-center text-chocolate-900 font-bold shadow-lg transform group-hover:scale-105 transition-transform">
-                    <i class="fa-solid fa-cookie-bite text-lg"></i>
-                </div>
-                <div>
-                    <span class="text-2xl font-serif tracking-wider font-bold gold-gradient-text">ChocoHub</span>
-                    <span class="block text-[10px] tracking-widest text-gold-light uppercase font-sans">Artisanal Boutique</span>
-                </div>
-            </a>
-
-            <!-- Desktop Navigation Links -->
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="#home" class="hover:text-gold transition-colors">Home</a>
-                <a href="#collections" class="hover:text-gold transition-colors">Collections</a>
-                <a href="#process" class="hover:text-gold transition-colors">Artisans & Craft</a>
-                <a href="#testimonials" class="hover:text-gold transition-colors">Reviews</a>
-                <a href="#contact" class="hover:text-gold transition-colors">Contact</a>
-            </nav>
-
-            <!-- Right Utilities (Currency, Cart) -->
-            <div class="flex items-center space-x-5">
-                <div class="hidden sm:flex items-center space-x-1 bg-chocolate-800 px-3 py-1.5 rounded-full border border-gold/35 text-xs text-gold-light">
-                    <i class="fa-solid fa-indian-rupee-sign"></i>
-                    <span class="font-semibold">INR (₹)</span>
-                </div>
-
-                <!-- Cart Button -->
-                <button id="cart-btn" class="relative p-2.5 rounded-full bg-chocolate-800 hover:bg-chocolate-700 border border-gold/30 text-gold-light transition-all focus:outline-none" aria-label="Shopping Cart">
-                    <i class="fa-solid fa-bag-shopping text-lg"></i>
-                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-gold text-chocolate-900 text-xs w-5 h-5 rounded-full font-bold flex items-center justify-center shadow-md scale-0 transition-transform duration-200">0</span>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo"><i class="fa-solid fa-cookie-bite"></i> ChocoHub</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Collection</a></li>
+                <li><a href="#builder">Bespoke Box</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn" id="cartToggle">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-badge" id="cartCount">2</span>
                 </button>
-
-                <!-- Mobile Menu Toggle -->
-                <button id="menu-toggle" class="md:hidden text-gold-light p-2 focus:outline-none">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Navigation Drawer -->
-        <div id="mobile-menu" class="hidden md:hidden bg-chocolate-900 border-t border-chocolate-800 px-6 py-4 space-y-3">
-            <a href="#home" class="block py-2 text-cream hover:text-gold transition-colors">Home</a>
-            <a href="#collections" class="block py-2 text-cream hover:text-gold transition-colors">Collections</a>
-            <a href="#process" class="block py-2 text-cream hover:text-gold transition-colors">Artisans & Craft</a>
-            <a href="#testimonials" class="block py-2 text-cream hover:text-gold transition-colors">Reviews</a>
-            <a href="#contact" class="block py-2 text-cream hover:text-gold transition-colors">Contact</a>
-            <div class="pt-2 border-t border-chocolate-800 flex items-center justify-between text-xs text-gold-light">
-                <span>Currency: Indian Rupees</span>
-                <span class="font-bold">₹ INR</span>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="relative overflow-hidden bg-gradient-to-b from-chocolate-900 via-chocolate-800 to-chocolate-900 text-cream py-20 lg:py-32">
-        <!-- Floating Chocolate Glow Elements -->
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-900/20 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <!-- Left Text Column -->
-                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                    <div class="inline-flex items-center space-x-2 bg-chocolate-700/80 border border-gold/30 px-4 py-1.5 rounded-full text-gold-light text-xs sm:text-sm tracking-wide shadow-sm">
-                        <i class="fa-solid fa-award text-gold"></i>
-                        <span>Handcrafted Luxury in Every Melt</span>
-                    </div>
-                    
-                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold leading-tight">
-                        Indulge in <span class="gold-gradient-text">Divine</span> Artisanal Chocolate
-                    </h1>
-                    
-                    <p class="text-base sm:text-lg text-cream/80 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
-                        From velvety 85% dark cacao blocks to decadent Madagascar white vanilla bean truffles and golden almond pralines. Experience handcrafted perfection made for true connoisseurs across India.
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-                        <a href="#collections" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-gold to-yellow-600 text-chocolate-900 font-bold hover:opacity-95 transition shadow-lg text-center flex items-center justify-center space-x-2">
-                            <span>Explore Collections</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                        <a href="#process" class="w-full sm:w-auto px-8 py-4 rounded-full bg-chocolate-800/80 border border-gold/40 text-gold-light hover:bg-chocolate-700 transition font-medium text-center">
-                            Taste the Magic
-                        </a>
-                    </div>
-
-                    <!-- Trust badges -->
-                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-chocolate-700/60 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
-                        <div>
-                            <p class="text-2xl font-serif font-bold text-gold">100%</p>
-                            <p class="text-xs text-cream/70">Pure Cocoa Butter</p>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-serif font-bold text-gold">Bean-to-Bar</p>
-                            <p class="text-xs text-cream/70">Artisanal Craft</p>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-serif font-bold text-gold">PAN India</p>
-                            <p class="text-xs text-cream/70">Temperature Safe Delivery</p>
-                        </div>
-                    </div>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Pure Cocoa Elegance, <span>Handcrafted</span> for Connoisseurs</h1>
+                <p>Discover rare single-origin cacao bars, artisanal gold-dusted truffles, and velvet ganaches crafted with absolute passion.</p>
+                <div class="btn-group">
+                    <a href="#products" class="btn btn-primary"><i class="fa-solid fa-shop"></i> Explore Collection</a>
+                    <a href="#builder" class="btn btn-outline">Build Your Box</a>
                 </div>
-
-                <!-- Right Visual Column (Melted Chocolate Showcase Graphic) -->
-                <div class="lg:col-span-5 relative">
-                    <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <!-- Decorative Frame -->
-                        <div class="absolute inset-0 bg-gradient-to-tr from-gold/30 to-whitechoc/20 rounded-3xl transform rotate-3 scale-105 filter blur-sm"></div>
-                        
-                        <div class="relative rounded-3xl overflow-hidden border-2 border-gold/30 bg-chocolate-800 shadow-2xl">
-                            <!-- Main Hero Image representing decadent melted chocolate / truffles -->
-                            <img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?q=80&w=800&auto=format&fit=crop" 
-                                 alt="Luxurious Melted Chocolate Art" 
-                                 class="w-full h-[420px] object-cover hover:scale-105 transition duration-700"
-                                 onerror="this.src='https://placehold.co/600x420/2c1810/D4AF37?text=ChocoHub+Artisanal'">
-                            
-                            <!-- Floating Badge Card -->
-                            <div class="absolute bottom-4 left-4 right-4 bg-chocolate-900/90 backdrop-blur-md p-4 rounded-2xl border border-gold/30 flex items-center justify-between">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 rounded-xl bg-gold/20 flex items-center justify-center text-gold">
-                                        <i class="fa-solid fa-fire text-lg"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-cream">Freshly Tempered Daily</h4>
-                                        <p class="text-xs text-gold-light">Signature Dark, Milk & White Selection</p>
-                                    </div>
-                                </div>
-                                <span class="bg-gold text-chocolate-900 font-bold text-xs px-3 py-1.5 rounded-full">Bestseller</span>
-                            </div>
-                        </div>
+            </div>
+            <div class="hero-visual">
+                <div class="chocolate-showcase-card">
+                    <div class="choc-art-box">
+                        <div class="choc-item"></div>
+                        <div class="choc-item"></div>
+                        <div class="choc-item"></div>
+                        <div class="choc-item"></div>
+                    </div>
+                    <div class="choc-info">
+                        <h3>Royal Gold Truffle Box</h3>
+                        <p>Artisanal Signature Edition</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Collections Section -->
-    <section id="collections" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span class="text-xs uppercase tracking-widest text-chocolate-600 font-semibold bg-gold/20 px-3 py-1 rounded-full">Curated Masterpieces</span>
-            <h2 class="text-3xl sm:text-5xl font-serif font-bold text-chocolate-900">Our Signature Collections</h2>
-            <p class="text-chocolate-600 text-base">Explore our exquisite range categorized across Dark Elegance, Creamy Milk Delights, Pure White Velvet, and Rare Ruby Fusions.</p>
-            
-            <!-- Category Filter Tabs -->
-            <div class="flex flex-wrap justify-center gap-2 pt-4" id="category-filters">
-                <button data-filter="all" class="px-5 py-2 rounded-full text-sm font-medium transition bg-chocolate-900 text-cream shadow-md filter-btn active">All Collections</button>
-                <button data-filter="dark" class="px-5 py-2 rounded-full text-sm font-medium transition bg-cream text-chocolate-800 border border-chocolate-300 hover:bg-chocolate-800 hover:text-cream filter-btn">Dark Chocolate</button>
-                <button data-filter="milk" class="px-5 py-2 rounded-full text-sm font-medium transition bg-cream text-chocolate-800 border border-chocolate-300 hover:bg-chocolate-800 hover:text-cream filter-btn">Milk Pralines</button>
-                <button data-filter="white" class="px-5 py-2 rounded-full text-sm font-medium transition bg-cream text-chocolate-800 border border-chocolate-300 hover:bg-chocolate-800 hover:text-cream filter-btn">White & Ruby</button>
+    <!-- Features Bar -->
+    <div class="features-bar">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-seedling"></i></div>
+                <div class="feature-text">
+                    <h4>Single-Origin Cacao</h4>
+                    <p>Sourced ethically from Ecuador & Madagascar</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-hands-holding-child"></i></div>
+                <div class="feature-text">
+                    <h4>Master Artisans</h4>
+                    <p>Handcrafted in small batches daily</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <div class="feature-text">
+                    <h4>Temperature Controlled</h4>
+                    <p>Delivered fresh & pristine to your doorstep</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+                <div class="feature-text">
+                    <h4>100% Organic</h4>
+                    <p>Zero artificial preservatives or additives</p>
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- Product Grid -->
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- Product Showcase -->
+    <section class="products-section" id="products">
+        <div class="section-header">
+            <span>The Masterpiece Catalog</span>
+            <h2>Our Exclusive Selection</h2>
+            <p>Indulge in a sensory journey through fine textures, rich notes, and velvety smoothness.</p>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Creations</button>
+            <button class="filter-btn" data-filter="truffles">Truffles & Pralines</button>
+            <button class="filter-btn" data-filter="bars">Dark & Milk Bars</button>
+            <button class="filter-btn" data-filter="gifts">Luxury Hampers</button>
+        </div>
+
+        <div class="products-grid">
             <!-- Product 1 -->
-            <div class="product-card group bg-white rounded-3xl overflow-hidden border border-chocolate-700/10 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between" data-category="dark">
-                <div class="relative overflow-hidden bg-chocolate-900">
-                    <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop" 
-                         alt="Velvet Noir 85% Dark Bar" 
-                         class="w-full h-64 object-cover group-hover:scale-110 transition duration-500"
-                         onerror="this.src='https://placehold.co/500x400/2c1810/D4AF37?text=Velvet+Noir'">
-                    <span class="absolute top-3 left-3 bg-chocolate-900/80 backdrop-blur-md text-gold text-xs px-3 py-1 rounded-full font-semibold border border-gold/30">85% Cacao</span>
-                    <span class="absolute top-3 right-3 bg-gold text-chocolate-900 text-xs px-2.5 py-1 rounded-full font-bold shadow">Dark</span>
+            <div class="product-card" data-category="truffles">
+                <div class="product-image-wrap">
+                    <span class="product-badge">Bestseller</span>
+                    <div class="product-graphic"><i class="fa-solid fa-cookie"></i></div>
                 </div>
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-xs text-chocolate-500 uppercase tracking-wider font-semibold">Single Origin</span>
-                            <div class="flex text-amber-500 text-xs">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-serif font-bold text-chocolate-900 group-hover:text-amber-700 transition">Velvet Noir 85% Dark Bar</h3>
-                        <p class="text-xs text-chocolate-600 mt-1 line-clamp-2">Intense single-origin Ecuadorian dark chocolate with notes of roasted coffee and dark cherries.</p>
-                    </div>
-                    <div class="flex items-center justify-between pt-2 border-t border-chocolate-100">
-                        <div>
-                            <span class="text-xs text-chocolate-500 block">Price</span>
-                            <span class="text-xl font-bold font-serif text-chocolate-900">₹499</span>
-                        </div>
-                        <button onclick="addToCart('Velvet Noir 85% Dark Bar', 499, 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop')" 
-                                class="px-4 py-2.5 bg-chocolate-900 hover:bg-amber-800 text-cream text-xs font-semibold rounded-xl transition shadow flex items-center space-x-2">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Add to Cart</span>
-                        </button>
+                <div class="product-content">
+                    <span class="product-category">Truffles</span>
+                    <h3 class="product-title">Gold Dust Dark Truffles</h3>
+                    <p class="product-desc">Silky 72% dark ganache infused with Bourbon vanilla, finished with edible 24k gold leaf flakes.</p>
+                    <div class="product-footer">
+                        <span class="product-price">₹880</span>
+                        <button class="add-to-cart-btn" onclick="addToCart('Gold Dust Dark Truffles', 880, 'fa-cookie')"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
             <!-- Product 2 -->
-            <div class="product-card group bg-white rounded-3xl overflow-hidden border border-chocolate-700/10 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between" data-category="milk">
-                <div class="relative overflow-hidden bg-chocolate-900">
-                    <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?q=80&w=600&auto=format&fit=crop" 
-                         alt="Almond Gold Milk Pralines" 
-                         class="w-full h-64 object-cover group-hover:scale-110 transition duration-500"
-                         onerror="this.src='https://placehold.co/500x400/5a3424/F3E5AB?text=Almond+Gold'">
-                    <span class="absolute top-3 left-3 bg-chocolate-900/80 backdrop-blur-md text-gold text-xs px-3 py-1 rounded-full font-semibold border border-gold/30">Roasted Almonds</span>
-                    <span class="absolute top-3 right-3 bg-amber-600 text-white text-xs px-2.5 py-1 rounded-full font-bold shadow">Milk</span>
+            <div class="product-card" data-category="bars">
+                <div class="product-image-wrap">
+                    <span class="product-badge">Single Origin</span>
+                    <div class="product-graphic"><i class="fa-solid fa-barcode"></i></div>
                 </div>
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-xs text-chocolate-500 uppercase tracking-wider font-semibold">Artisanal Pralines</span>
-                            <div class="flex text-amber-500 text-xs">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-serif font-bold text-chocolate-900 group-hover:text-amber-700 transition">Almond Gold Milk Pralines</h3>
-                        <p class="text-xs text-chocolate-600 mt-1 line-clamp-2">Creamy milk chocolate shells filled with caramelized California almond butter and honey.</p>
-                    </div>
-                    <div class="flex items-center justify-between pt-2 border-t border-chocolate-100">
-                        <div>
-                            <span class="text-xs text-chocolate-500 block">Price</span>
-                            <span class="text-xl font-bold font-serif text-chocolate-900">₹650</span>
-                        </div>
-                        <button onclick="addToCart('Almond Gold Milk Pralines', 650, 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?q=80&w=600&auto=format&fit=crop')" 
-                                class="px-4 py-2.5 bg-chocolate-900 hover:bg-amber-800 text-cream text-xs font-semibold rounded-xl transition shadow flex items-center space-x-2">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Add to Cart</span>
-                        </button>
+                <div class="product-content">
+                    <span class="product-category">Dark Bars</span>
+                    <h3 class="product-title">Ecuadorian 80% Cacao Bar</h3>
+                    <p class="product-desc">Deep, intense notes of roasted coffee bean and subtle red fruit finish.</p>
+                    <div class="product-footer">
+                        <span class="product-price">₹575</span>
+                        <button class="add-to-cart-btn" onclick="addToCart('Ecuadorian 80% Cacao Bar', 575, 'fa-barcode')"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
             <!-- Product 3 -->
-            <div class="product-card group bg-white rounded-3xl overflow-hidden border border-chocolate-700/10 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between" data-category="white">
-                <div class="relative overflow-hidden bg-whitechoc">
-                    <img src="https://images.unsplash.com/photo-1526318961596-17d4d4362d80?q=80&w=600&auto=format&fit=crop" 
-                         alt="Madagascar White Vanilla Bean Slab" 
-                         class="w-full h-64 object-cover group-hover:scale-110 transition duration-500"
-                         onerror="this.src='https://placehold.co/500x400/F5ECE1/2c1810?text=White+Vanilla'">
-                    <span class="absolute top-3 left-3 bg-chocolate-900/80 backdrop-blur-md text-gold text-xs px-3 py-1 rounded-full font-semibold border border-gold/30">Bourbon Vanilla</span>
-                    <span class="absolute top-3 right-3 bg-amber-100 text-chocolate-900 border border-gold text-xs px-2.5 py-1 rounded-full font-bold shadow">White</span>
+            <div class="product-card" data-category="truffles">
+                <div class="product-image-wrap">
+                    <span class="product-badge">New Flavor</span>
+                    <div class="product-graphic"><i class="fa-solid fa-gem"></i></div>
                 </div>
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-xs text-chocolate-500 uppercase tracking-wider font-semibold">Pure White Velvet</span>
-                            <div class="flex text-amber-500 text-xs">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-serif font-bold text-chocolate-900 group-hover:text-amber-700 transition">Madagascar White Vanilla Bean Slab</h3>
-                        <p class="text-xs text-chocolate-600 mt-1 line-clamp-2">Lush white chocolate infused with real scraped Madagascar bourbon vanilla bean specks. Silky smooth melt.</p>
-                    </div>
-                    <div class="flex items-center justify-between pt-2 border-t border-chocolate-100">
-                        <div>
-                            <span class="text-xs text-chocolate-500 block">Price</span>
-                            <span class="text-xl font-bold font-serif text-chocolate-900">₹580</span>
-                        </div>
-                        <button onclick="addToCart('Madagascar White Vanilla Bean Slab', 580, 'https://images.unsplash.com/photo-1526318961596-17d4d4362d80?q=80&w=600&auto=format&fit=crop')" 
-                                class="px-4 py-2.5 bg-chocolate-900 hover:bg-amber-800 text-cream text-xs font-semibold rounded-xl transition shadow flex items-center space-x-2">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Add to Cart</span>
-                        </button>
+                <div class="product-content">
+                    <span class="product-category">Pralines</span>
+                    <h3 class="product-title">Pistachio Kunafa Pralines</h3>
+                    <p class="product-desc">Crunchy toasted pistachio and crispy kataifi pastry enrobed in creamy milk chocolate.</p>
+                    <div class="product-footer">
+                        <span class="product-price">₹845</span>
+                        <button class="add-to-cart-btn" onclick="addToCart('Pistachio Kunafa Pralines', 845, 'fa-gem')"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
             <!-- Product 4 -->
-            <div class="product-card group bg-white rounded-3xl overflow-hidden border border-chocolate-700/10 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between" data-category="white">
-                <div class="relative overflow-hidden bg-rose-50">
-                    <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?q=80&w=600&auto=format&fit=crop" 
-                         alt="Ruby & White Raspberry Dream Truffles" 
-                         class="w-full h-64 object-cover group-hover:scale-110 transition duration-500"
-                         onerror="this.src='https://placehold.co/500x400/5a3424/F3E5AB?text=Ruby+Raspberry'">
-                    <span class="absolute top-3 left-3 bg-chocolate-900/80 backdrop-blur-md text-gold text-xs px-3 py-1 rounded-full font-semibold border border-gold/30">Ruby Infusion</span>
-                    <span class="absolute top-3 right-3 bg-pink-500 text-white text-xs px-2.5 py-1 rounded-full font-bold shadow">Ruby/White</span>
+            <div class="product-card" data-category="gifts">
+                <div class="product-image-wrap">
+                    <span class="product-badge">Collector Item</span>
+                    <div class="product-graphic"><i class="fa-solid fa-gift"></i></div>
                 </div>
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-xs text-chocolate-500 uppercase tracking-wider font-semibold">Signature Truffles</span>
-                            <div class="flex text-amber-500 text-xs">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-serif font-bold text-chocolate-900 group-hover:text-amber-700 transition">Ruby & White Raspberry Dream Truffles</h3>
-                        <p class="text-xs text-chocolate-600 mt-1 line-clamp-2">Rare ruby chocolate paired with creamy white chocolate ganache and tart freeze-dried Himalayan raspberries.</p>
-                    </div>
-                    <div class="flex items-center justify-between pt-2 border-t border-chocolate-100">
-                        <div>
-                            <span class="text-xs text-chocolate-500 block">Price</span>
-                            <span class="text-xl font-bold font-serif text-chocolate-900">₹750</span>
-                        </div>
-                        <button onclick="addToCart('Ruby & White Raspberry Dream Truffles', 750, 'https://images.unsplash.com/photo-1579372786545-d24232daf58c?q=80&w=600&auto=format&fit=crop')" 
-                                class="px-4 py-2.5 bg-chocolate-900 hover:bg-amber-800 text-cream text-xs font-semibold rounded-xl transition shadow flex items-center space-x-2">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Add to Cart</span>
-                        </button>
+                <div class="product-content">
+                    <span class="product-category">Luxury Hampers</span>
+                    <h3 class="product-title">Symphony Gift Box (16 Pcs)</h3>
+                    <p class="product-desc">An opulent assortment of our finest truffles, sea salt caramels, and fruit-infused ganaches.</p>
+                    <div class="product-footer">
+                        <span class="product-price">₹1,945</span>
+                        <button class="add-to-cart-btn" onclick="addToCart('Symphony Gift Box (16 Pcs)', 1945, 'fa-gift')"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Melted Chocolate Showcase & Tempering Process -->
-    <section id="process" class="py-20 bg-gradient-to-b from-chocolate-900 via-chocolate-800 to-chocolate-900 text-cream relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Details -->
-                <div class="space-y-6">
-                    <span class="text-xs uppercase tracking-widest text-gold font-semibold bg-chocolate-700/80 px-3 py-1 rounded-full border border-gold/30">Artisanal Craftsmanship</span>
-                    <h2 class="text-3xl sm:text-5xl font-serif font-bold leading-tight">
-                        The Art of Melted <span class="gold-gradient-text">Perfection</span>
-                    </h2>
-                    <p class="text-cream/80 text-base leading-relaxed">
-                        True luxury chocolate begins with precise temperature control and slow stone-ground cacao. Our master chocolatiers meticulously temper each batch—whether rich dark, buttery milk, or pristine white chocolate—to create that signature glossy snap and velvety melt on the palate.
-                    </p>
-
-                    <div class="space-y-4 pt-2">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-10 h-10 rounded-xl bg-gold/20 border border-gold/40 flex items-center justify-center text-gold flex-shrink-0 mt-1">
-                                <i class="fa-solid fa-seedling"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-serif font-bold text-lg text-gold-light">Ethically Sourced Cacao Beans</h4>
-                                <p class="text-xs text-cream/70">Sourced directly from sustainable plantations, ensuring fair trade and exceptional flavor profiles.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start space-x-4">
-                            <div class="w-10 h-10 rounded-xl bg-gold/20 border border-gold/40 flex items-center justify-center text-gold flex-shrink-0 mt-1">
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-serif font-bold text-lg text-gold-light">Precision Temperature Tempering</h4>
-                                <p class="text-xs text-cream/70">Carefully heated and cooled to form stable cocoa butter crystals for ultimate gloss and texture.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start space-x-4">
-                            <div class="w-10 h-10 rounded-xl bg-gold/20 border border-gold/40 flex items-center justify-center text-gold flex-shrink-0 mt-1">
-                                <i class="fa-solid fa-gift"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-serif font-bold text-lg text-gold-light">Luxury Hand-Packaged in India</h4>
-                                <p class="text-xs text-cream/70">Delivered in temperature-controlled aesthetic gift boxes right to your doorstep anywhere in India.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Interactive Showcase Card / Melted visual -->
-                <div class="relative">
-                    <div class="relative rounded-3xl overflow-hidden border-2 border-gold/40 shadow-2xl bg-chocolate-950">
-                        <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=800&auto=format&fit=crop" 
-                             alt="Chocolate Melting Process" 
-                             class="w-full h-[480px] object-cover opacity-90 hover:scale-105 transition duration-700"
-                             onerror="this.src='https://placehold.co/600x480/3d2317/D4AF37?text=Tempering+Process'">
-                        
-                        <div class="absolute inset-0 bg-gradient-to-t from-chocolate-950 via-transparent to-transparent"></div>
-                        
-                        <div class="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-chocolate-900/90 backdrop-blur-md border border-gold/30 flex items-center justify-between">
-                            <div>
-                                <span class="text-xs text-gold uppercase tracking-wider font-semibold">Experience The Taste</span>
-                                <h3 class="text-xl font-serif font-bold text-cream mt-1">Ready to gift someone special?</h3>
-                            </div>
-                            <a href="#collections" class="px-5 py-3 bg-gold hover:bg-yellow-500 text-chocolate-900 font-bold rounded-xl text-xs transition shadow">
-                                Shop Gift Boxes
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Customer Reviews / Testimonials -->
-    <section id="testimonials" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span class="text-xs uppercase tracking-widest text-chocolate-600 font-semibold bg-gold/20 px-3 py-1 rounded-full">Loved Across India</span>
-            <h2 class="text-3xl sm:text-5xl font-serif font-bold text-chocolate-900">What Chocolate Lovers Say</h2>
-            <p class="text-chocolate-600 text-base">Read glowing reviews from connoisseurs who have experienced the magic of ChocoHub boutiques.</p>
+    <!-- Custom Box Builder -->
+    <section class="builder-section" id="builder">
+        <div class="section-header">
+            <span>Tailor Your Experience</span>
+            <h2>Build Your Bespoke Box</h2>
+            <p>Customize your dream chocolate box size and flavor combination.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Review 1 -->
-            <div class="bg-white p-8 rounded-3xl border border-chocolate-700/10 shadow-lg relative flex flex-col justify-between">
-                <div class="absolute -top-4 right-8 w-8 h-8 rounded-full bg-gold text-chocolate-900 flex items-center justify-center font-bold text-sm shadow">
-                    <i class="fa-solid fa-quote-right"></i>
-                </div>
-                <div class="space-y-4">
-                    <div class="flex text-amber-500 text-sm">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-chocolate-700 text-sm italic leading-relaxed">
-                        "The Velvet Noir 85% bar is simply phenomenal! Deep, rich, with zero bitterness. Ordered it to Mumbai and it arrived in pristine condition."
-                    </p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-chocolate-100 flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full bg-chocolate-200 flex items-center justify-center font-bold text-chocolate-800">
-                        AN
-                    </div>
-                    <div>
-                        <h4 class="font-serif font-bold text-chocolate-900 text-sm">Ananya Nair</h4>
-                        <span class="text-xs text-chocolate-500">Mumbai, Maharashtra</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Review 2 -->
-            <div class="bg-white p-8 rounded-3xl border border-chocolate-700/10 shadow-lg relative flex flex-col justify-between">
-                <div class="absolute -top-4 right-8 w-8 h-8 rounded-full bg-gold text-chocolate-900 flex items-center justify-center font-bold text-sm shadow">
-                    <i class="fa-solid fa-quote-right"></i>
-                </div>
-                <div class="space-y-4">
-                    <div class="flex text-amber-500 text-sm">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-chocolate-700 text-sm italic leading-relaxed">
-                        "The Madagascar White Vanilla Bean slab is out of this world. You can actually see the real vanilla pods. Absolute luxury!"
-                    </p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-chocolate-100 flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full bg-chocolate-200 flex items-center justify-center font-bold text-chocolate-800">
-                        RS
-                    </div>
-                    <div>
-                        <h4 class="font-serif font-bold text-chocolate-900 text-sm">Rohan Sharma</h4>
-                        <span class="text-xs text-chocolate-500">New Delhi</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Review 3 -->
-            <div class="bg-white p-8 rounded-3xl border border-chocolate-700/10 shadow-lg relative flex flex-col justify-between">
-                <div class="absolute -top-4 right-8 w-8 h-8 rounded-full bg-gold text-chocolate-900 flex items-center justify-center font-bold text-sm shadow">
-                    <i class="fa-solid fa-quote-right"></i>
-                </div>
-                <div class="space-y-4">
-                    <div class="flex text-amber-500 text-sm">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <p class="text-chocolate-700 text-sm italic leading-relaxed">
-                        "Gifted the Ruby & White Raspberry truffles for our anniversary. The packaging and flavor combination were top-notch. Highly recommended!"
-                    </p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-chocolate-100 flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full bg-chocolate-200 flex items-center justify-center font-bold text-chocolate-800">
-                        PM
-                    </div>
-                    <div>
-                        <h4 class="font-serif font-bold text-chocolate-900 text-sm">Priya Menon</h4>
-                        <span class="text-xs text-chocolate-500">Bengaluru, Karnataka</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer Section -->
-    <footer id="contact" class="bg-chocolate-900 text-cream pt-20 pb-12 border-t border-gold/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-16 border-b border-chocolate-800">
-                <!-- Brand Info -->
-                <div class="lg:col-span-2 space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold to-whitechoc flex items-center justify-center text-chocolate-900 font-bold shadow-lg">
-                            <i class="fa-solid fa-cookie-bite text-lg"></i>
-                        </div>
-                        <span class="text-2xl font-serif tracking-wider font-bold gold-gradient-text">ChocoHub</span>
-                    </div>
-                    <p class="text-xs sm:text-sm text-cream/70 max-w-sm leading-relaxed">
-                        India’s premier artisanal chocolate boutique. Dedicated to crafting exceptional dark, milk, white, and ruby confections using ethical single-origin cacao.
-                    </p>
-                    <div class="flex items-center space-x-4 pt-2">
-                        <a href="#" class="w-9 h-9 rounded-full bg-chocolate-800 hover:bg-gold hover:text-chocolate-900 transition flex items-center justify-center text-gold-light border border-gold/30"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-chocolate-800 hover:bg-gold hover:text-chocolate-900 transition flex items-center justify-center text-gold-light border border-gold/30"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-chocolate-800 hover:bg-gold hover:text-chocolate-900 transition flex items-center justify-center text-gold-light border border-gold/30"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-chocolate-800 hover:bg-gold hover:text-chocolate-900 transition flex items-center justify-center text-gold-light border border-gold/30"><i class="fa-brands fa-pinterest"></i></a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="font-serif font-bold text-base text-gold mb-4">Quick Links</h4>
-                    <ul class="space-y-2.5 text-xs sm:text-sm text-cream/80">
-                        <li><a href="#home" class="hover:text-gold transition">Home</a></li>
-                        <li><a href="#collections" class="hover:text-gold transition">Collections</a></li>
-                        <li><a href="#process" class="hover:text-gold transition">Artisans & Craft</a></li>
-                        <li><a href="#testimonials" class="hover:text-gold transition">Customer Reviews</a></li>
-                        <li><a href="#contact" class="hover:text-gold transition">Contact Us</a></li>
-                    </ul>
-                </div>
-
-                <!-- Collections -->
-                <div>
-                    <h4 class="font-serif font-bold text-base text-gold mb-4">Collections</h4>
-                    <ul class="space-y-2.5 text-xs sm:text-sm text-cream/80">
-                        <li><a href="#collections" class="hover:text-gold transition">Dark Chocolate (85%)</a></li>
-                        <li><a href="#collections" class="hover:text-gold transition">Milk Pralines</a></li>
-                        <li><a href="#collections" class="hover:text-gold transition">White Vanilla Slabs</a></li>
-                        <li><a href="#collections" class="hover:text-gold transition">Ruby & Raspberry</a></li>
-                        <li><a href="#collections" class="hover:text-gold transition">Festive Gift Hampers</a></li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter -->
-                <div>
-                    <h4 class="font-serif font-bold text-base text-gold mb-4">Sweet Updates</h4>
-                    <p class="text-xs text-cream/70 mb-4">Subscribe to receive exclusive offers, seasonal releases, and private tasting invites.</p>
-                    <form onsubmit="handleNewsletter(event)" class="space-y-2">
-                        <input type="email" placeholder="Enter your email" required class="w-full px-4 py-2.5 rounded-xl bg-chocolate-800 border border-gold/30 text-xs text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
-                        <button type="submit" class="w-full py-2.5 bg-gold hover:bg-yellow-500 text-chocolate-900 font-bold text-xs rounded-xl transition shadow">
-                            Subscribe
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-cream/60">
-                <p>&copy; 2026 ChocoHub India. All rights reserved.</p>
-                <div class="flex space-x-6 mt-4 sm:mt-0">
-                    <a href="#" class="hover:text-gold transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-gold transition">Terms of Service</a>
-                    <a href="#" class="hover:text-gold transition">Shipping & Returns</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Sliding Cart Drawer -->
-    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-chocolate-900 text-cream shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gold/30">
-        <!-- Cart Header -->
-        <div class="p-6 border-b border-chocolate-800 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-bag-shopping text-gold text-xl"></i>
-                <h3 class="font-serif font-bold text-xl text-cream">Your Shopping Bag</h3>
-            </div>
-            <button id="close-cart" class="text-cream/70 hover:text-gold p-2 text-lg focus:outline-none">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <!-- Cart Items List -->
-        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-chocolate-800">
-            <!-- Dynamically populated or empty message -->
-            <div id="empty-cart-msg" class="text-center py-16 space-y-3">
-                <div class="w-16 h-16 rounded-full bg-chocolate-800 text-gold flex items-center justify-center mx-auto text-2xl border border-gold/20">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                </div>
-                <p class="text-cream/70 text-sm font-medium">Your bag is currently empty.</p>
-                <button onclick="toggleCart(); document.getElementById('collections').scrollIntoView();" class="px-4 py-2 bg-gold text-chocolate-900 text-xs font-bold rounded-xl mt-2">
-                    Explore Collections
-                </button>
-            </div>
-        </div>
-
-        <!-- Cart Footer -->
-        <div class="p-6 border-t border-chocolate-800 bg-chocolate-950 space-y-4">
-            <div class="flex items-center justify-between text-sm">
-                <span class="text-cream/70">Subtotal (PAN India Delivery)</span>
-                <span id="cart-subtotal" class="font-serif font-bold text-gold text-lg">₹0</span>
-            </div>
-            <p class="text-[10px] text-cream/50">Taxes and temperature-safe packaging included. Shipping calculated at checkout.</p>
-            <button onclick="checkout()" class="w-full py-3.5 bg-gradient-to-r from-gold to-yellow-600 hover:opacity-95 text-chocolate-900 font-bold rounded-xl text-sm transition shadow-lg flex items-center justify-center space-x-2">
-                <span>Proceed to Checkout (INR)</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Backdrop for Cart -->
-    <div id="cart-backdrop" class="fixed inset-y-0 left-0 right-0 w-screen h-screen z-40 bg-chocolate-950/60 backdrop-blur-sm hidden"></div>
-
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-6 left-6 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-        <div class="bg-chocolate-800 border border-gold text-cream px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-full bg-gold text-chocolate-900 flex items-center justify-center font-bold text-sm">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <div>
-                <h4 id="toast-title" class="font-serif font-bold text-xs text-gold">Added to Cart!</h4>
-                <p id="toast-msg" class="text-[11px] text-cream/80">Item successfully added to your shopping bag.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Modal for Alerts/Checkout Success -->
-    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-chocolate-950/80 backdrop-blur-sm hidden">
-        <div class="bg-chocolate-900 border border-gold/40 rounded-3xl p-8 max-w-md w-full text-center space-y-5 shadow-2xl text-cream">
-            <div class="w-16 h-16 rounded-full bg-gold/20 border border-gold text-gold flex items-center justify-center mx-auto text-3xl">
-                <i class="fa-solid fa-gift"></i>
-            </div>
-            <div class="space-y-2">
-                <h3 id="modal-title" class="text-2xl font-serif font-bold text-gold">Order Successful!</h3>
-                <p id="modal-desc" class="text-xs sm:text-sm text-cream/80">Thank you for shopping with ChocoHub. Your artisanal chocolates are being hand-tempered and prepared for delivery.</p>
-            </div>
-            <button onclick="closeModal()" class="w-full py-3 bg-gold text-chocolate-900 font-bold rounded-xl text-xs transition shadow hover:bg-yellow-500">
-                Continue Shopping
-            </button>
-        </div>
-    </div>
-
-    <script>
-        // Shopping Cart State
-        let cart = [];
-
-        // DOM Elements
-        const cartBtn = document.getElementById('cart-btn');
-        const closeCartBtn = document.getElementById('close-cart');
-        const cartDrawer = document.getElementById('cart-drawer');
-        const cartBackdrop = document.getElementById('cart-backdrop');
-        const cartBadge = document.getElementById('cart-badge');
-        const cartItemsContainer = document.getElementById('cart-items-container');
-        const emptyCartMsg = document.getElementById('empty-cart-msg');
-        const cartSubtotal = document.getElementById('cart-subtotal');
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        // Toggle Mobile Menu
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Toggle Cart Drawer
-        function toggleCart() {
-            cartDrawer.classList.toggle('translate-x-full');
-            cartBackdrop.classList.toggle('hidden');
-        }
-
-        cartBtn.addEventListener('click', toggleCart);
-        closeCartBtn.addEventListener('click', toggleCart);
-        cartBackdrop.addEventListener('click', toggleCart);
-
-        // Add to Cart function
-        function addToCart(name, price, image) {
-            const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cart.push({ name, price, image, qty: 1 });
-            }
-            updateCartUI();
-            showToast('Added to Cart', `${name} has been added to your bag.`);
-        }
-
-        // Remove from cart
-        function removeFromCart(name) {
-            cart = cart.filter(item => item.name !== name);
-            updateCartUI();
-        }
-
-        // Change quantity
-        function changeQty(name, delta) {
-            const item = cart.find(i => i.name === name);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) {
-                    removeFromCart(name);
-                } else {
-                    updateCartUI();
-                }
-            }
-        }
-
-        // Update Cart UI
-        function updateCartUI() {
-            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-
-            // Badge counter
-            if (totalCount > 0) {
-                cartBadge.innerText = totalCount;
-                cartBadge.classList.remove('scale-0');
-            } else {
-                cartBadge.classList.add('scale-0');
-            }
-
-            // Subtotal
-            cartSubtotal.innerText = `₹${totalPrice.toLocaleString('en-IN')}`;
-
-            // Render Items
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `
-                    <div id="empty-cart-msg" class="text-center py-16 space-y-3">
-                        <div class="w-16 h-16 rounded-full bg-chocolate-800 text-gold flex items-center justify-center mx-auto text-2xl border border-gold/20">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </div>
-                        <p class="text-cream/70 text-sm font-medium">Your bag is currently empty.</p>
-                        <button onclick="toggleCart(); document.getElementById('collections').scrollIntoView();" class="px-4 py-2 bg-gold text-chocolate-900 text-xs font-bold rounded-xl mt-2">
-                            Explore Collections
-                        </button>
-                    </div>
-                `;
-            } else {
-                cartItemsContainer.innerHTML = cart.map(item => `
-                    <div class="flex items-center space-x-4 py-4">
-                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl border border-gold/20">
-                        <div class="flex-1">
-                            <h4 class="font-serif font-bold text-sm text-cream line-clamp-1">${item.name}</h4>
-                            <p class="text-gold text-xs font-semibold mt-0.5">₹${item.price.toLocaleString('en-IN')}</p>
-                            <div class="flex items-center space-x-3 mt-2">
-                                <button onclick="changeQty('${item.name}', -1)" class="w-6 h-6 rounded bg-chocolate-800 hover:bg-chocolate-700 text-gold flex items-center justify-center text-xs">-</button>
-                                <span class="text-xs font-bold text-cream">${item.qty}</span>
-                                <button onclick="changeQty('${item.name}', 1)" class="w-6 h-6 rounded bg-chocolate-800 hover:bg-chocolate-700 text-gold flex items-center justify-center text-xs">+</button>
-                            </div>
-                        </div>
-                        <button onclick="removeFromCart('${item.name}')" class="text-cream/40 hover:text-red-400 p-2 text-sm">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // Show Toast Notification
-        function showToast(title, msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-title').innerText = title;
-            document.getElementById('toast-msg').innerText = msg;
-            
-            toast.classList.remove('-translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('-translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-
-        // Newsletter handler
-        function handleNewsletter(e) {
-            e.preventDefault();
-            showToast('Subscribed!', 'Thank you for subscribing to ChocoHub sweet updates.');
-            e.target.reset();
-        }
-
-        // Checkout simulation
-        function checkout() {
-            if (cart.length === 0) {
-                showToast('Cart Empty', 'Please add items to your cart before checkout.');
-                return;
-            }
-            toggleCart();
-            document.getElementById('custom-modal').classList.remove('hidden');
-            cart = [];
-            updateCartUI();
-        }
-
-        function closeModal() {
-            document.getElementById('custom-modal').classList.add('hidden');
-        }
-
-        // Category Filtering
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const productCards = document.querySelectorAll('.product-card');
-
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterButtons.forEach(b => {
-                    b.classList.remove('bg-chocolate-900', 'text-cream', 'shadow-md');
-                    b.classList.add('bg-cream', 'text-chocolate-800', 'border', 'border-chocolate-300');
-                });
-                btn.classList.remove('bg-cream', 'text-chocolate-800', 'border', 'border-chocolate-300');
-                btn.classList.add('bg-chocolate-900', 'text-cream', 'shadow-md');
-
-                const filter = btn.getAttribute('data-filter');
-                productCards.forEach(card => {
-                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-</html>
-
+        <div class="builder-container">
+            <div class="builder-steps">
+                <div class="builder-options">
+                    <h3>1. Choose Box Capacity</h3>
+                    <div class="option-group">
+                        <label>Select Box Size</label>
+                        <div class="option-chips">
+                            <div class="chip selected" onclick="updateBoxSize(4, 699)">4 Pieces (₹699)</div>
+                            <div class="chip" onclick="updateBoxSize(9, 1299)">9 Pieces (₹1299)</div>
+                            <div class="chip" onclick="updateBoxSize(
