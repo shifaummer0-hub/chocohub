@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChocoHub - Artisanal Chocolate Boutique</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        chocolate: {
+                            900: '#1e110b',
+                            800: '#2c1810',
+                            700: '#3d2317',
+                            600: '#5a3424',
+                            500: '#7a4833',
+                        },
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#F3E5AB',
+                            dark: '#AA8C2C',
+                        },
+                        cream: '#FDFBF7',
+                        whitechoc: '#F5ECE1',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FDFBF7;
+            color: #2c1810;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Melted drip decorative background element */
+        .melted-drip {
+            background: linear-gradient(135deg, #2c1810 0%, #3d2317 50%, #5a3424 100%);
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA8C2C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .whitechoc-glow {
+            box-shadow: 0 10px 30px -5px rgba(245, 236, 225, 0.4);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FDFBF7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7a4833;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-cream text-chocolate-800 antialiased selection:bg-gold selection:text-chocolate-900">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-chocolate-900/95 backdrop-blur-md text-cream border-b border-gold/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold to-whitechoc flex items-center justify-center text-chocolate-900 font-bold shadow-lg transform group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-cookie-bite text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-serif tracking-wider font-bold gold-gradient-text">ChocoHub</span>
+                    <span class="block text-[10px] tracking-widest text-gold-light uppercase font-sans">Artisanal Boutique</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <button onclick="navigateTo('home')" class="nav-link hover:text-gold transition-colors text-gold font-bold" data-target="home">Home</button>
+                <button onclick="navigateTo('products')" class="nav-link hover:text-gold transition-colors" data-target="products">Products & Catalog</button>
+                <button onclick="navigateTo('process')" class="nav-link hover:text-gold transition-colors" data-target="process">Artisans & Craft</button>
+                <button onclick="navigateTo('testimonials')" class="nav-link hover:text-gold transition-colors" data-target="testimonials">Reviews</button>
+                <button onclick="navigateTo('contact')" class="nav-link hover:text-gold transition-colors" data-target="contact">Contact</button>
+            </nav>
+
+            <!-- Right Utilities (Currency, Cart) -->
+            <div class="flex items-center space-x-5">
+                <div class="hidden sm:flex items-center space-x-1 bg-chocolate-800 px-3 py-1.5 rounded-full border border-gold/35 text-xs text-gold-light">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <span class="font-semibold">INR (₹)</span>
+                </div>
+
+                <!-- Cart Button -->
+                <button id="cart-btn" class="relative p-2.5 rounded-full bg-chocolate-800 hover:bg-chocolate-700 border border-gold/30 text-gold-light transition-all focus:outline-none" aria-label="Shopping Cart">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-gold text-chocolate-900 text-xs w-5 h-5 rounded-full font-bold flex items-center justify-center shadow-md scale-0 transition-transform duration-200">0</span>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="menu-toggle" class="md:hidden text-gold-light p-2 focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-chocolate-900 border-t border-chocolate-800 px-6 py-4 space-y-3">
+            <button onclick="navigateTo('home'); toggleMobileMenu();" class="block w-full text-left py-2 text-cream hover:text-gold transition-colors">Home</button>
+            <button onclick="navigateTo('products'); toggleMobileMenu();" class="block w-full text-left py-2 text-cream hover:text-gold transition-colors">Products & Catalog</button>
+            <button onclick="navigateTo('process'); toggleMobileMenu();" class="block w-full text-left py-2 text-cream hover:text-gold transition-colors">Artisans & Craft</button>
+            <button onclick="navigateTo('testimonials'); toggleMobileMenu();" class="block w-full text-left py-2 text-cream hover:text-gold transition-colors">Reviews</button>
+            <button onclick="navigateTo('contact'); toggleMobileMenu();" class="block w-full text-left py-2 text-cream hover:text-gold transition-colors">Contact</button>
+            <div class="pt-2 border-t border-chocolate-800 flex items-center justify-between text-xs text-gold-light">
+                <span>Currency: Indian Rupees</span>
+                <span class="font-bold">₹ INR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTENT CONTAINER FOR MULTI-PAGE NAVIGATION -->
+    <main id="app-viewport">
+
+        <!-- PAGE 1: HOME PAGE -->
+        <div id="page-home" class="page-view transition-all duration-300">
+            <!-- Hero Section -->
+            <section id="home-hero" class="relative overflow-hidden bg-gradient-to-b from-chocolate-900 via-chocolate-800 to-chocolate-900 text-cream py-20 lg:py-32">
+                <!-- Floating Chocolate Glow Elements -->
+                <div class="absolute -top-24 -left-24 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-900/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <!-- Left Text Column -->
+                        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                            <div class="inline-flex items-center space-x-2 bg-chocolate-700/80 border border-gold/30 px-4 py-1.5 rounded-full text-gold-light text-xs sm:text-sm tracking-wide shadow-sm">
+                                <i class="fa-solid fa-award text-gold"></i>
+                                <span>Handcrafted Luxury in Every Melt</span>
+                            </div>
+                            
+                            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold leading-tight">
+                                Indulge in <span class="gold-gradient-text">Divine</span> Artisanal Chocolate
+                            </h1>
+                            
+                            <p class="text-base sm:text-lg text-cream/80 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+                                From velvety 85% dark cacao blocks to decadent Madagascar white vanilla bean truffles and golden almond pralines. Experience handcrafted perfection made for true connoisseurs across India.
+                            </p>
+
+                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                                <button onclick="navigateTo('products')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-gold to-yellow-600 text-chocolate-900 font-bold hover:opacity-95 transition shadow-lg text-center flex items-center justify-center space-x-2">
+                                    <span>Browse Catalog</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                                <button onclick="navigateTo('products', 'white')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-chocolate-800/80 border border-gold/40 text-gold-light hover:bg-chocolate-700 transition font-medium text-center">
+                                    White Chocolates Collection
+                                </button>
+                            </div>
+
+                            <!-- Trust badges -->
+                            <div class="pt-8 grid grid-cols-3 gap-4 border-t border-chocolate-700/60 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
+                                <div>
+                                    <p class="text-2xl font-serif font-bold text-gold">100%</p>
+                                    <p class="text-xs text-cream/70">Pure Cocoa Butter</p>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-serif font-bold text-gold">Bean-to-Bar</p>
+                                    <p class="text-xs text-cream/70">Artisanal Craft</p>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-serif font-bold text-gold">PAN India</p>
+                                    <p class="text-xs text-cream/70">Temperature Safe</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Visual Column (Melted Chocolate Showcase Graphic) -->
+                        <div class="lg:col-span-5 relative">
+                            <div class="relative mx-auto max-w-md lg:max-w-none">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-gold/30 to-whitechoc/20 rounded-3xl transform rotate-3 scale-105 filter blur-sm"></div>
+                                <div class="relative rounded-3xl overflow-hidden border-2 border-gold/30 bg-chocolate-800 shadow-2xl">
+                                    <img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?q=80&w=800&auto=format&fit=crop" 
+                                         alt="Luxurious Melted Chocolate Art" 
+                                         class="w-full h-[420px] object-cover hover:scale-105 transition duration-700"
+                                         onerror="this.src='https://placehold.co/600x420/2c1810/D4AF37?text=ChocoHub+Artisanal'">
+                                    
+                                    <div class="absolute bottom-4 left-4 right-4 bg-chocolate-900/90 backdrop-blur-md p-4 rounded-2xl border border-gold/30 flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 rounded-xl bg-gold/20 flex items-center justify-center text-gold">
+                                                <i class="fa-solid fa-fire text-lg"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-sm font-bold text-cream">Freshly Tempered Daily</h4>
+                                                <p class="text-xs text-gold-light">Dark, Milk & White Selection</p>
+                                            </div>
+                                        </div>
+                                        <button onclick="navigateTo('products')" class="bg-gold text-chocolate-900 font-bold text-xs px-3 py-1.5 rounded-full hover:bg-yellow-400 transition">Shop All</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Highlights Grid (Quick Teaser) -->
+            <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10 pb-4 border-b border-chocolate-200">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-chocolate-600 font-semibold bg-gold/20 px-3 py-1 rounded-full">Selected Delights</span>
+                        <h2 class="text-3xl font-serif font-bold text-chocolate-900 mt-2">Signature Bestsellers</h2>
+                    </div>
+                    <button onclick="navigateTo('products')" class="mt-4 sm:mt-0 text-xs font-bold text-chocolate-800 hover:text-gold-dark flex items-center space-x-2">
+                        <span>View All 8+ Products</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div id="home-featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Javascript rendered quick highlights -->
+                </div>
+            </section>
+
+            <!-- Process & Artisans -->
+            <section id="process" class="py-20 bg-gradient-to-b from-chocolate-900 via-chocolate-800 to-chocolate-900 text-cream relative overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6">
+                            <span class="text-xs uppercase tracking-widest text-gold font-semibold bg-chocolate-700/80 px-3 py-1 rounded-full border border-gold/30">Artisanal Craftsmanship</span>
+                            <h2 class="text-3xl sm:text-5xl font-serif font-bold leading-tight">
+                                The Art of Melted <span class="gold-gradient-text">Perfection</span>
+                            </h2>
+                            <p class="text-cream/80 text-base leading-relaxed">
+                                True luxury chocolate begins with precise temperature control and slow stone-ground cacao. Our master chocolatiers meticulously temper each batch—whether rich dark, buttery milk, or pristine white chocolate—to create that signature glossy snap and velvety melt on the palate.
+                            </p>
+                        </div>
+                        <div class="relative">
+                            <div class="relative rounded-3xl overflow-hidden border-2 border-gold/40 shadow-2xl bg-chocolate-950">
+                                <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Chocolate Melting Process" 
+                                     class="w-full h-[380px] object-cover opacity-90 hover:scale-105 transition duration-700"
+                                     onerror="this.src='https://placehold.co/600x480/3d2317/D4AF37?text=Tempering+Process'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reviews Section -->
+            <section id="testimonials" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-xs uppercase tracking-widest text-chocolate-600 font-semibold bg-gold/20 px-3 py-1 rounded-full">Loved Across India</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-chocolate-900">What Chocolate Lovers Say</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-3xl border border-chocolate-700/10 shadow-lg relative flex flex-col justify-between">
+                        <p class="text-chocolate-700 text-sm italic leading-relaxed">"The Velvet Noir 85% bar is simply phenomenal! Deep, rich, with zero bitterness. Arrived in Mumbai perfectly intact."</p>
+                        <h4 class="font-serif font-bold text-chocolate-900 text-sm mt-4">— Ananya Nair, Mumbai</h4>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-chocolate-700/10 shadow-lg relative flex flex-col justify-between">
+                        <p class="text-chocolate-700 text-sm italic leading-relaxed">"The Madagascar White Vanilla Bean slab is out of this world. You can actually see the real vanilla pods!"</p>
+                        <h4 class="font-serif font-bold text-chocolate-900 text-sm mt-4">— Rohan Sharma, New Delhi</h4>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-chocolate-700/10 shadow-lg relative flex flex-col justify-between">
+                        <p class="text-chocolate-700 text-sm italic leading-relaxed">"Gifted the White Hazelnut Bark for our anniversary. Exceptional packaging and silky flavor."</p>
+                        <h4 class="font-serif font-bold text-chocolate-900 text-sm mt-4">— Priya Menon, Bengaluru</h4>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE 2: FULL PRODUCTS & CATALOG VIEW -->
+        <div id="page-products" class="page-view hidden transition-all duration-300">
+            <div class="bg-chocolate-900 text-cream py-12 px-4 sm:px-6 lg:px-8 border-b border-gold/20">
+                <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <div class="flex items-center space-x-2 text-xs text-gold-light mb-2">
+                            <button onclick="navigateTo('home')" class="hover:underline">Home</button>
+                            <span>/</span>
+                            <span class="text-gold font-semibold">Catalog</span>
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-serif font-bold gold-gradient-text">Artisanal Collections</h1>
+                        <p class="text-sm text-cream/70 mt-2 max-w-xl">Explore our handcrafted dark, milk, and specialty white chocolates made with 100% cocoa butter.</p>
+                    </div>
+
+                    <!-- Sorting & Search Controls -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="relative flex-1 sm:w-64">
+                            <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="Search chocolates..." 
+                                   class="w-full bg-chocolate-800 border border-gold/30 rounded-xl px-4 py-2.5 text-xs text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
+                            <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-gold/60 text-xs"></i>
+                        </div>
+                        <select id="sort-select" onchange="filterProducts()" class="bg-chocolate-800 border border-gold/30 text-xs text-cream px-4 py-2.5 rounded-xl focus:outline-none focus:border-gold">
+                            <option value="featured">Sort by: Featured</option>
+                            <option value="low-high">Price: Low to High</option>
+                            <option value="high-low">Price: High to Low</option>
+                            <option value="rating">Highest Rated</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <!-- Category Filter Pills -->
+                <div class="flex flex-wrap items-center justify-center gap-3 mb-10" id="catalog-category-filters">
+                    <button onclick="setFilter('all')" data-cat="all" class="cat-pill active px-6 py-2.5 rounded-full text-xs font-bold transition bg-chocolate-900 text-cream shadow">All Chocolates</button>
+                    <button onclick="setFilter('white')" data-cat="white" class="cat-pill px-6 py-2.5 rounded-full text-xs font-bold transition bg-whitechoc text-chocolate-900 border border-gold hover:bg-gold hover:text-chocolate-900">✨ White Chocolates</button>
+                    <button onclick="setFilter('dark')" data-cat="dark" class="cat-pill px-6 py-2.5 rounded-full text-xs font-bold transition bg-cream text-chocolate-800 border border-chocolate-300 hover:bg-chocolate-800 hover:text-cream">Dark Cocoa (70-85%)</button>
+                    <button onclick="setFilter('milk')" data-cat="milk" class="cat-pill px-6 py-2.5 rounded-full text-xs font-bold transition bg-cream text-chocolate-800 border border-chocolate-300 hover:bg-chocolate-800 hover:text-cream">Milk Pralines</button>
+                    <button onclick="setFilter('truffles')" data-cat="truffles" class="cat-pill px-6 py-2.5 rounded-full text-xs font-bold transition bg-cream text-chocolate-800 border border-chocolate-300 hover:bg-chocolate-800 hover:text-cream">Ruby & Truffles</button>
+                </div>
+
+                <!-- Product Cards Grid -->
+                <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Dynamically populated products -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: DEDICATED PRODUCT DETAIL VIEW -->
+        <div id="page-detail" class="page-view hidden transition-all duration-300 py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <!-- Back navigation button -->
+            <button onclick="navigateTo('products')" class="inline-flex items-center space-x-2 text-xs font-bold text-chocolate-800 hover:text-gold-dark mb-8 bg-chocolate-100 px-4 py-2 rounded-full transition">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to Catalog</span>
+            </button>
+
+            <div id="product-detail-content" class="bg-white rounded-3xl border border-chocolate-200 shadow-xl overflow-hidden p-6 sm:p-10">
+                <!-- Dynamically populated detail view -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="bg-chocolate-900 text-cream pt-20 pb-12 border-t border-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-16 border-b border-chocolate-800">
+                <!-- Brand Info -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold to-whitechoc flex items-center justify-center text-chocolate-900 font-bold shadow-lg">
+                            <i class="fa-solid fa-cookie-bite text-lg"></i>
+                        </div>
+                        <span class="text-2xl font-serif tracking-wider font-bold gold-gradient-text">ChocoHub</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-cream/70 max-w-sm leading-relaxed">
+                        India’s premier artisanal chocolate boutique. Dedicated to crafting exceptional dark, milk, white, and ruby confections using ethical single-origin cacao.
+                    </p>
+                    <div class="flex items-center space-x-4 pt-2">
+                        <a href="#" class="w-9 h-9 rounded-full bg-chocolate-800 hover:bg-gold hover:text-chocolate-900 transition flex items-center justify-center text-gold-light border border-gold/30"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-chocolate-800 hover:bg-gold hover:text-chocolate-900 transition flex items-center justify-center text-gold-light border border-gold/30"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-chocolate-800 hover:bg-gold hover:text-chocolate-900 transition flex items-center justify-center text-gold-light border border-gold/30"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-chocolate-800 hover:bg-gold hover:text-chocolate-900 transition flex items-center justify-center text-gold-light border border-gold/30"><i class="fa-brands fa-pinterest"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-serif font-bold text-base text-gold mb-4">Quick Links</h4>
+                    <ul class="space-y-2.5 text-xs sm:text-sm text-cream/80">
+                        <li><a href="#home" class="hover:text-gold transition">Home</a></li>
+                        <li><a href="#collections" class="hover:text-gold transition">Collections</a></li>
+                        <li><a href="#process" class="hover:text-gold transition">Artisans & Craft</a></li>
+                        <li><a href="#testimonials" class="hover:text-gold transition">Customer Reviews</a></li>
+                        <li><a href="#contact" class="hover:text-gold transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Collections -->
+                <div>
+                    <h4 class="font-serif font-bold text-base text-gold mb-4">Collections</h4>
+                    <ul class="space-y-2.5 text-xs sm:text-sm text-cream/80">
+                        <li><a href="#collections" class="hover:text-gold transition">Dark Chocolate (85%)</a></li>
+                        <li><a href="#collections" class="hover:text-gold transition">Milk Pralines</a></li>
+                        <li><a href="#collections" class="hover:text-gold transition">White Vanilla Slabs</a></li>
+                        <li><a href="#collections" class="hover:text-gold transition">Ruby & Raspberry</a></li>
+                        <li><a href="#collections" class="hover:text-gold transition">Festive Gift Hampers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-serif font-bold text-base text-gold mb-4">Sweet Updates</h4>
+                    <p class="text-xs text-cream/70 mb-4">Subscribe to receive exclusive offers, seasonal releases, and private tasting invites.</p>
+                    <form onsubmit="handleNewsletter(event)" class="space-y-2">
+                        <input type="email" placeholder="Enter your email" required class="w-full px-4 py-2.5 rounded-xl bg-chocolate-800 border border-gold/30 text-xs text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
+                        <button type="submit" class="w-full py-2.5 bg-gold hover:bg-yellow-500 text-chocolate-900 font-bold text-xs rounded-xl transition shadow">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-cream/60">
+                <p>&copy; 2026 ChocoHub India. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-gold transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-gold transition">Terms of Service</a>
+                    <a href="#" class="hover:text-gold transition">Shipping & Returns</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sliding Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-chocolate-900 text-cream shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gold/30">
+        <!-- Cart Header -->
+        <div class="p-6 border-b border-chocolate-800 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-bag-shopping text-gold text-xl"></i>
+                <h3 class="font-serif font-bold text-xl text-cream">Your Shopping Bag</h3>
+            </div>
+            <button id="close-cart" class="text-cream/70 hover:text-gold p-2 text-lg focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Cart Items List -->
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-chocolate-800">
+            <!-- Dynamically populated or empty message -->
+            <div id="empty-cart-msg" class="text-center py-16 space-y-3">
+                <div class="w-16 h-16 rounded-full bg-chocolate-800 text-gold flex items-center justify-center mx-auto text-2xl border border-gold/20">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </div>
+                <p class="text-cream/70 text-sm font-medium">Your bag is currently empty.</p>
+                <button onclick="toggleCart(); document.getElementById('collections').scrollIntoView();" class="px-4 py-2 bg-gold text-chocolate-900 text-xs font-bold rounded-xl mt-2">
+                    Explore Collections
+                </button>
+            </div>
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="p-6 border-t border-chocolate-800 bg-chocolate-950 space-y-4">
+            <div class="flex items-center justify-between text-sm">
+                <span class="text-cream/70">Subtotal (PAN India Delivery)</span>
+                <span id="cart-subtotal" class="font-serif font-bold text-gold text-lg">₹0</span>
+            </div>
+            <p class="text-[10px] text-cream/50">Taxes and temperature-safe packaging included. Shipping calculated at checkout.</p>
+            <button onclick="checkout()" class="w-full py-3.5 bg-gradient-to-r from-gold to-yellow-600 hover:opacity-95 text-chocolate-900 font-bold rounded-xl text-sm transition shadow-lg flex items-center justify-center space-x-2">
+                <span>Proceed to Checkout (INR)</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Backdrop for Cart -->
+    <div id="cart-backdrop" class="fixed inset-y-0 left-0 right-0 w-screen h-screen z-40 bg-chocolate-950/60 backdrop-blur-sm hidden"></div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 left-6 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-chocolate-800 border border-gold text-cream px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-gold text-chocolate-900 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <h4 id="toast-title" class="font-serif font-bold text-xs text-gold">Added to Cart!</h4>
+                <p id="toast-msg" class="text-[11px] text-cream/80">Item successfully added to your shopping bag.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Alerts/Checkout Success -->
+    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-chocolate-950/80 backdrop-blur-sm hidden">
+        <div class="bg-chocolate-900 border border-gold/40 rounded-3xl p-8 max-w-md w-full text-center space-y-5 shadow-2xl text-cream">
+            <div class="w-16 h-16 rounded-full bg-gold/20 border border-gold text-gold flex items-center justify-center mx-auto text-3xl">
+                <i class="fa-solid fa-gift"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 id="modal-title" class="text-2xl font-serif font-bold text-gold">Order Successful!</h3>
+                <p id="modal-desc" class="text-xs sm:text-sm text-cream/80">Thank you for shopping with ChocoHub. Your artisanal chocolates are being hand-tempered and prepared for delivery.</p>
+            </div>
+            <button onclick="closeModal()" class="w-full py-3 bg-gold text-chocolate-900 font-bold rounded-xl text-xs transition shadow hover:bg-yellow-500">
+                Continue Shopping
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Complete Product Database with detailed attributes
+        const productsData = [
+            {
+                id: 'white-1',
+                name: 'Madagascar White Vanilla Bean Slab',
+                category: 'white',
+                price: 580,
+                rating: 5.0,
+                reviewsCount: 42,
+                tag: 'Pure Bourbon Vanilla',
+                badge: 'White',
+                image: 'https://images.unsplash.com/photo-1526318961596-17d4d4362d80?q=80&w=600&auto=format&fit=crop',
+                description: 'Lush 34% pure cocoa butter white chocolate infused with real scraped Madagascar bourbon vanilla bean specks. Silky smooth texture with hints of warm butter and natural flora.',
+                origin: 'Madagascar Beans',
+                weight: '120g Slab'
+            },
+            {
+                id: 'white-2',
+                name: 'White Chocolate Hazelnut Bark',
+                category: 'white',
+                price: 680,
+                rating: 4.9,
+                reviewsCount: 28,
+                tag: 'Piedmont Roasted',
+                badge: 'White',
+                image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=600&auto=format&fit=crop',
+                description: 'Velvety white chocolate slab studded generously with slow-roasted Italian Piedmont hazelnuts and a sprinkle of sea salt flakes for an irresistible crunch.',
+                origin: 'Piedmont, Italy',
+                weight: '150g Bark'
+            },
+            {
+                id: 'white-3',
+                name: 'Pistachio Saffron White Bar',
+                category: 'white',
+                price: 720,
+                rating: 5.0,
+                reviewsCount: 35,
+                tag: 'Kashmiri Gold',
+                badge: 'White',
+                image: 'https://images.unsplash.com/photo-1548907040-4baa42d10919?q=80&w=600&auto=format&fit=crop',
+                description: 'A royal Indian fusion featuring artisanal white chocolate blended with fragrant Kashmiri saffron threads and crushed Iranian pistachios.',
+                origin: 'Kashmir & Iran',
+                weight: '110g Luxury Bar'
+            },
+            {
+                id: 'dark-1',
+                name: 'Velvet Noir 85% Dark Bar',
+                category: 'dark',
+                price: 499,
+                rating: 4.8,
+                reviewsCount: 64,
+                tag: 'Single Origin',
+                badge: 'Dark',
+                image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop',
+                description: 'Intense single-origin Ecuadorian dark chocolate with notes of roasted espresso beans, dark red cherries, and minimal acidity.',
+                origin: 'Ecuador Cacao',
+                weight: '100g Bar'
+            },
+            {
+                id: 'dark-2',
+                name: 'Midnight Sea Salt 70% Dark Block',
+                category: 'dark',
+                price: 520,
+                rating: 4.7,
+                reviewsCount: 19,
+                tag: 'Sea Salt Crusted',
+                badge: 'Dark',
+                image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=600&auto=format&fit=crop',
+                description: 'Balanced 70% dark chocolate sprinkled with hand-harvested flaked sea salt. Perfectly contrasts deep cocoa with savory crunch.',
+                origin: 'Ghana Cacao',
+                weight: '120g Block'
+            },
+            {
+                id: 'milk-1',
+                name: 'Almond Gold Milk Pralines',
+                category: 'milk',
+                price: 650,
+                rating: 4.9,
+                reviewsCount: 51,
+                tag: 'Roasted Almonds',
+                badge: 'Milk',
+                image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?q=80&w=600&auto=format&fit=crop',
+                description: 'Creamy milk chocolate shells filled with smooth caramelized California almond butter and organic wildflower honey.',
+                origin: 'California Almonds',
+                weight: ' Box of 12 Pralines'
+            },
+            {
+                id: 'truffles-1',
+                name: 'Ruby & White Raspberry Dream Truffles',
+                category: 'truffles',
+                price: 750,
+                rating: 5.0,
+                reviewsCount: 39,
+                tag: 'Ruby Infusion',
+                badge: 'Ruby/White',
+                image: 'https://images.unsplash.com/photo-1579372786545-d24232daf58c?q=80&w=600&auto=format&fit=crop',
+                description: 'Rare ruby cacao paired with creamy white chocolate ganache and tart freeze-dried Himalayan raspberries. A sweet-tangy delight.',
+                origin: 'Himalayan Berries',
+                weight: ' Box of 9 Truffles'
+            },
+            {
+                id: 'truffles-2',
+                name: 'Grand Cru Dark Ganache Truffles',
+                category: 'truffles',
+                price: 820,
+                rating: 4.9,
+                reviewsCount: 22,
+                tag: 'Gold Leaf Dust',
+                badge: 'Luxury',
+                image: 'https://images.unsplash.com/photo-1548907040-4baa42d10919?q=80&w=600&auto=format&fit=crop',
+                description: 'Decadent 75% dark chocolate ganache rolled in pure French cocoa powder and topped with 24k edible gold leaf flakes.',
+                origin: 'French Blend',
+                weight: ' Box of 8 Truffles'
+            }
+        ];
+
+        // State Management
+        let cart = [];
+        let currentCategory = 'all';
+        let detailQty = 1;
+
+        function navigateTo(pageId, categoryFilter = null) {
+            // Hide all pages
+            document.querySelectorAll('.page-view').forEach(p => p.classList.add('hidden'));
+
+            // Show selected page
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+
+            // Scroll top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update active navigation state
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('data-target') === pageId) {
+                    link.classList.add('text-gold', 'font-bold');
+                } else {
+                    link.classList.remove('text-gold', 'font-bold');
+                }
+            });
+
+            // Handle sub-filtering on navigation
+            if (pageId === 'products') {
+                if (categoryFilter) {
+                    setFilter(categoryFilter);
+                } else {
+                    filterProducts();
+                }
+            }
+        }
+
+        function setFilter(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('#catalog-category-filters .cat-pill').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.classList.add('bg-chocolate-900', 'text-cream', 'shadow');
+                    btn.classList.remove('bg-cream', 'bg-whitechoc', 'text-chocolate-800', 'text-chocolate-900');
+                } else {
+                    btn.classList.remove('bg-chocolate-900', 'text-cream', 'shadow');
+                    btn.classList.add('bg-cream', 'text-chocolate-800');
+                }
+            });
+            filterProducts();
+        }
+
+        function filterProducts() {
+            const searchVal = document.getElementById('search-input')?.value.toLowerCase() || '';
+            const sortVal = document.getElementById('sort-select')?.value || 'featured';
+
+            let filtered = productsData.filter(p => {
+                const matchesCat = (currentCategory === 'all') || (p.category === currentCategory);
+                const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.description.toLowerCase().includes(searchVal);
+                return matchesCat && matchesSearch;
+            });
+
+            // Sorting logic
+            if (sortVal === 'low-high') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortVal === 'high-low') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (sortVal === 'rating') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            }
+
+            renderCatalogGrid(filtered);
+        }
+
+        function renderCatalogGrid(items) {
+            const container = document.getElementById('catalog-grid');
+            if (!container) return;
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-16 space-y-3">
+                        <i class="fa-solid fa-cookie text-4xl text-chocolate-400"></i>
+                        <p class="text-chocolate-600 font-serif text-lg">No delicious chocolates match your filter.</p>
+                        <button onclick="setFilter('all')" class="px-4 py-2 bg-gold text-chocolate-900 text-xs font-bold rounded-xl">Clear Filters</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = items.map(product => `
+                <div class="product-card group bg-white rounded-3xl overflow-hidden border border-chocolate-700/10 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
+                    <div class="relative overflow-hidden bg-chocolate-900 cursor-pointer" onclick="openProductDetail('${product.id}')">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/500x400/2c1810/D4AF37?text=${encodeURIComponent(product.name)}'">
+                        <span class="absolute top-3 left-3 bg-chocolate-900/80 backdrop-blur-md text-gold text-xs px-3 py-1 rounded-full font-semibold border border-gold/30">${product.tag}</span>
+                        <span class="absolute top-3 right-3 ${product.category === 'white' ? 'bg-amber-100 text-chocolate-900 border border-gold' : 'bg-gold text-chocolate-900'} text-xs px-2.5 py-1 rounded-full font-bold shadow">${product.badge}</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs text-chocolate-500 uppercase tracking-wider font-semibold">${product.origin}</span>
+                                <div class="flex items-center space-x-1 text-amber-500 text-xs">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span class="font-bold text-chocolate-800 text-[11px]">${product.rating.toFixed(1)}</span>
+                                </div>
+                            </div>
+                            <h3 onclick="openProductDetail('${product.id}')" class="text-lg font-serif font-bold text-chocolate-900 group-hover:text-amber-700 transition cursor-pointer">${product.name}</h3>
+                            <p class="text-xs text-chocolate-600 mt-1 line-clamp-2">${product.description}</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-chocolate-100">
+                            <div>
+                                <span class="text-[10px] text-chocolate-500 uppercase block">Price</span>
+                                <span class="text-xl font-bold font-serif text-chocolate-900">₹${product.price.toLocaleString('en-IN')}</span>
+                            </div>
+                            <button onclick="addToCartById('${product.id}')" class="px-4 py-2.5 bg-chocolate-900 hover:bg-amber-800 text-cream text-xs font-semibold rounded-xl transition shadow flex items-center space-x-2">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openProductDetail(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            detailQty = 1;
+            const container = document.getElementById('product-detail-content');
+            
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    <!-- Image Column -->
+                    <div class="relative rounded-2xl overflow-hidden border border-gold/30 shadow-lg bg-chocolate-900">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-96 sm:h-[450px] object-cover" onerror="this.src='https://placehold.co/600x480/2c1810/D4AF37?text=${encodeURIComponent(product.name)}'">
+                        <span class="absolute top-4 left-4 bg-chocolate-900/90 text-gold text-xs px-3 py-1.5 rounded-full font-bold border border-gold/30">${product.tag}</span>
+                    </div>
+
+                    <!-- Details Column -->
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex items-center space-x-2 text-xs text-amber-700 font-semibold uppercase tracking-wider mb-2">
+                                <span>${product.weight}</span>
+                                <span>•</span>
+                                <span>${product.origin}</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-chocolate-900">${product.name}</h2>
+                            <div class="flex items-center space-x-3 mt-3">
+                                <div class="flex text-amber-500 text-sm">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <span class="text-xs font-bold text-chocolate-800">${product.rating} / 5.0</span>
+                                <span class="text-xs text-chocolate-500">(${product.reviewsCount} Customer Reviews)</span>
+                            </div>
+                        </div>
+
+                        <p class="text-chocolate-700 text-sm leading-relaxed">${product.description}</p>
+
+                        <div class="p-4 bg-cream rounded-2xl border border-chocolate-200/60 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-chocolate-500 block">Unit Price</span>
+                                <span class="text-3xl font-serif font-bold text-chocolate-900">₹${product.price.toLocaleString('en-IN')}</span>
+                            </div>
+                            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full">In Stock & Ready to Ship</span>
+                        </div>
+
+                        <!-- Quantity Selector and Add to Cart -->
+                        <div class="space-y-4 pt-2">
+                            <label class="text-xs font-bold text-chocolate-800 uppercase block">Select Quantity</label>
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center border border-chocolate-300 rounded-xl bg-cream overflow-hidden">
+                                    <button onclick="updateDetailQty(-1)" class="px-4 py-3 text-chocolate-800 hover:bg-chocolate-200 text-sm font-bold">-</button>
+                                    <span id="detail-qty-val" class="px-4 text-sm font-bold text-chocolate-900">1</span>
+                                    <button onclick="updateDetailQty(1)" class="px-4 py-3 text-chocolate-800 hover:bg-chocolate-200 text-sm font-bold">+</button>
+                                </div>
+                                <button onclick="addDetailToCart('${product.id}')" class="flex-1 py-3.5 bg-gradient-to-r from-gold to-yellow-600 hover:opacity-95 text-chocolate-900 font-bold rounded-xl text-sm transition shadow-lg flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-bag-shopping"></i>
+                                    <span>Add to Cart (₹<span id="detail-total-btn">${product.price.toLocaleString('en-IN')}</span>)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Highlights list -->
+                        <div class="border-t border-chocolate-100 pt-4 grid grid-cols-2 gap-4 text-xs text-chocolate-700">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-truck-fast text-gold-dark"></i>
+                                <span>Cold-Chain Insulated Shipping</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-leaf text-gold-dark"></i>
+                                <span>100% Pure Cocoa Butter</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            navigateTo('detail');
+        }
+
+        function updateDetailQty(delta) {
+            detailQty = Math.max(1, detailQty + delta);
+            const qtyElem = document.getElementById('detail-qty-val');
+            const totalElem = document.getElementById('detail-total-btn');
+            if (qtyElem) qtyElem.innerText = detailQty;
+            
+            // Calc dynamic price display
+            const pId = document.querySelector('#product-detail-content button[onclick^="addDetailToCart"]')?.getAttribute('onclick').match(/'([^']+)'/)[1];
+            const p = productsData.find(item => item.id === pId);
+            if (p && totalElem) {
+                totalElem.innerText = (p.price * detailQty).toLocaleString('en-IN');
+            }
+        }
+
+        function addDetailToCart(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.name === product.name);
+            if (existingItem) {
+                existingItem.qty += detailQty;
+            } else {
+                cart.push({ name: product.name, price: product.price, image: product.image, qty: detailQty });
+            }
+            updateCartUI();
+            showToast('Added to Cart', `${detailQty}x ${product.name} added to your bag.`);
+        }
+
+        function addToCartById(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (product) {
+                addToCart(product.name, product.price, product.image);
+            }
+        }
+
+        // Home highlights renderer
+        function renderHomeHighlights() {
+            const container = document.getElementById('home-featured-grid');
+            if (!container) return;
+            const featured = productsData.slice(0, 4);
+            container.innerHTML = featured.map(p => `
+                <div class="bg-white rounded-3xl overflow-hidden border border-chocolate-700/10 shadow hover:shadow-xl transition flex flex-col justify-between">
+                    <div class="relative cursor-pointer" onclick="openProductDetail('${p.id}')">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-52 object-cover" onerror="this.src='https://placehold.co/400x300/2c1810/D4AF37?text=${encodeURIComponent(p.name)}'">
+                        <span class="absolute top-3 left-3 bg-chocolate-900/80 text-gold text-[10px] px-2.5 py-1 rounded-full font-bold">${p.tag}</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <h3 onclick="openProductDetail('${p.id}')" class="font-serif font-bold text-chocolate-900 hover:text-amber-700 cursor-pointer line-clamp-1">${p.name}</h3>
+                            <p class="text-xs text-chocolate-600 mt-1 line-clamp-2">${p.description}</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-chocolate-100">
+                            <span class="font-serif font-bold text-chocolate-900 text-lg">₹${p.price}</span>
+                            <button onclick="addToCartById('${p.id}')" class="px-3 py-1.5 bg-chocolate-900 text-cream text-xs rounded-xl hover:bg-amber-800 transition">Add +</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu')?.classList.toggle('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderHomeHighlights();
+            filterProducts();
+        });
+    </script>
+</body>
+</html>
